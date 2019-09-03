@@ -1,6 +1,6 @@
 # Deploy to Firebase
 
-A GitHub Action to deploy to Firebase Hosting
+A GitHub Action to deploy to Firebase
 
 - This action only deploys the `master` branch
 - Make sure you have the `firebase.json` file in the repository
