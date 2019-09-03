@@ -25,7 +25,7 @@ jobs:
     - name: Build Hugo
       uses: lowply/build-hugo@v0.0.2
     - name: Deploy to Firebase
-      uses: lowply/deploy-firebase@v0.0.2
+      uses: Dabolus/deploy-firebase@v0.1.0
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         FIREBASE_PROJECT: name-of-the-project
