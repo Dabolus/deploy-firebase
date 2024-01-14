@@ -1,31 +1,49 @@
 # Deploy to Firebase
 
-A GitHub Action to deploy to Firebase
+A GitHub Action to deploy to Firebase.
 
-- This action only deploys the `master` branch
-- Make sure you have the `firebase.json` file in the repository
-- Get the Firebase token by running `firebase login:ci` and [store it](https://help.github.com/en/articles/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables) as the `FIREBASE_TOKEN` secret
-- Set the project name in the `FIREBASE_PROJECT` env var
+- Make sure that you checkout the repository using the [actions/checkout](https://github.com/actions/checkout) action
+- Make sure that you have the `firebase.json` file in the repository
+- To obtain the Firebase token, run `firebase login:ci` on your local computer and [store the token](https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository) as the `FIREBASE_TOKEN` secret
+- Specify the Firebase project name in the `FIREBASE_PROJECT` env var
 
-Example workflow
+## Workflow examples
+
+Deploy the `main` branch when a commit is pushed to it:
 
 ```
-name: Build and Deploy
+name: Deploy the main branch
 on:
   push:
     branches:
-    - master
+      - main
 jobs:
   main:
-    name: Build and Deploy
+    name: Deploy to Firebase
     runs-on: ubuntu-latest
     steps:
-    - name: Check out code
-      uses: actions/checkout@master
-    - name: Build Hugo
-      uses: lowply/build-hugo@v0.0.2
-    - name: Deploy to Firebase
-      uses: Dabolus/deploy-firebase@v0.1.0
+    - uses: actions/checkout@v2
+    - uses: Dabolus/deploy-firebase
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        FIREBASE_PROJECT: name-of-the-project
+```
+
+Deploy only when a tag starts with `v` is pushed:
+
+```
+name: Deploy a tag
+on:
+  push:
+    tags:
+      - v*
+jobs:
+  main:
+    name: Deploy to Firebase
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: Dabolus/deploy-firebase
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         FIREBASE_PROJECT: name-of-the-project

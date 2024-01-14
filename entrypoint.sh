@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -z "${FIREBASE_TOKEN}" ]; then
     echo "FIREBASE_TOKEN is missing"
@@ -11,5 +11,5 @@ if [ -z "${FIREBASE_PROJECT}" ]; then
 fi
 
 firebase deploy \
-    -m "${GITHUB_SHA}" \
+    -m "${GITHUB_REF} (${GITHUB_SHA})" \
     --project ${FIREBASE_PROJECT}
